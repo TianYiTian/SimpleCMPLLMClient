@@ -98,9 +98,13 @@ compose.desktop {
         mainClass = "com.tyt.deepseektest.MainKt"
 
         nativeDistributions {
-            targetFormats(TargetFormat.Dmg, TargetFormat.Msi, TargetFormat.Deb)
+            targetFormats(TargetFormat.Dmg, TargetFormat.Msi, TargetFormat.Deb,TargetFormat.Exe)
+            includeAllModules = true
             packageName = "com.tyt.deepseektest"
             packageVersion = "1.0.0"
+            buildTypes.release.proguard {
+                isEnabled.set(false)
+            }
         }
     }
 }

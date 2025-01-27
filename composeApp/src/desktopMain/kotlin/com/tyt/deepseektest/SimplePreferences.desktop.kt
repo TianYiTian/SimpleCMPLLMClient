@@ -6,7 +6,7 @@ import com.tyt.deepseektest.NetworkService.GSON
 import java.io.File
 
 actual object SimplePreferences {
-    private val file = File("SimplePreferences")
+    private val file = File(System.getProperty("user.home"), "DeepseekTestSimplePreferences")
 
     init {
         if (!file.exists()) {
