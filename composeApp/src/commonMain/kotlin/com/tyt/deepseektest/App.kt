@@ -145,9 +145,6 @@ fun oldApp() {
         Button(onClick = {
             showContent = !showContent
             coroutineScope.launch {
-                test { newText ->
-                    text = newText
-                }
             }
         }) {
             Text(text)
@@ -162,29 +159,3 @@ fun oldApp() {
     }
 }
 
-suspend fun test(onTextChanged: (String) -> Unit) {
-    val requestModel: ChatRequestModel
-    val response = NetworkService.CLIENT.post("https://api.deepseek.com/chat/completions") {
-        contentType(ContentType.Application.Json)
-        header(
-            "Authorization", "Bearer sk-738cd0198eae479bbfda12e44457f154"
-        )
-        setBody(
-            ChatRequestModel(
-                mutableStateListOf(
-                    ChatMessageModel(
-                        ChatRole.SYSTEM, "你是一个没用的机器人,回答我的问题"
-                    ), ChatMessageModel(
-                        ChatRole.USER, "你是傻子吗"
-                    )
-                ), temperature = 1.3f, model = "deepseek-chat"
-            )
-        )
-    }
-    if (response.status.value == 200) {
-        val model: ChatResponseModel = response.body()
-        onTextChanged(model.choices[0].message.content)
-    } else {
-        println(response)
-    }
-}
