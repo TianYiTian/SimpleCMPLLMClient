@@ -1,0 +1,107 @@
+CREATE TABLE IF NOT EXISTS Test(
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  int INTEGER NOT NULL,
+  string TEXT NOT NULL
+);
+
+getTests:
+SELECT * FROM Test;
+
+insertTest{
+INSERT OR REPLACE INTO Test(int,string) VALUES(?,?);
+SELECT last_insert_rowid();
+}
+
+deleteTest:
+DELETE FROM Test WHERE id=?;
+
+updateTest:
+UPDATE Test SET int = :int, string = :string WHERE id = :id;
+
+CREATE TABLE  IF NOT EXISTS ChatDB (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    requestModel TEXT NOT NULL ,
+    apiAddress TEXT NOT NULL,
+    token TEXT NOT NULL,
+    title TEXT NOT NULL,
+    lastModified INTEGER NOT NULL
+);
+
+insertChat{
+INSERT OR REPLACE INTO ChatDB(requestModel,apiAddress,token,title,lastModified) VALUES(?,?,?,?,?);
+SELECT last_insert_rowid();
+}
+
+updateChat:
+UPDATE ChatDB SET requestModel = :requestModel, apiAddress = :apiAddress,token =:token ,title = :title, lastModified = :lastModified WHERE id = :id;
+
+deleteChat:
+DELETE FROM ChatDB WHERE id=?;
+
+getChats:
+SELECT * FROM ChatDB;
+
+CREATE TABLE IF NOT EXISTS ApiAddress(
+     address TEXT PRIMARY KEY,
+     alias TEXT NOT NULL,
+     lastModified INTEGER NOT NULL
+);
+
+insertApiAddress:
+INSERT OR REPLACE INTO ApiAddress(address,alias,lastModified) VALUES (?,?,?);
+
+updateApiAddress:
+UPDATE ApiAddress SET alias = :alias,lastModified = :lastModified WHERE address = :address;
+
+deleteApiAddress:
+DELETE FROM ApiAddress WHERE  address=?;
+
+getApiAddresses:
+SELECT * FROM ApiAddress;
+
+checkApiAddressExists:
+SELECT EXISTS (SELECT 1 FROM ApiAddress WHERE address=:address);
+
+
+CREATE TABLE IF NOT EXISTS Model(
+     name TEXT PRIMARY KEY,
+     alias TEXT NOT NULL,
+     lastModified INTEGER NOT NULL
+);
+
+insertModel:
+INSERT OR REPLACE INTO Model(name,alias,lastModified) VALUES (?,?,?);
+
+updateModel:
+UPDATE Model SET alias = :alias, lastModified = :lastModified WHERE name = :name;
+
+deleteModel:
+DELETE FROM Model WHERE  name=?;
+
+getModels:
+SELECT * FROM Model;
+
+checkModelExists:
+SELECT EXISTS (SELECT 1 FROM Model WHERE name=:name);
+
+CREATE TABLE IF NOT EXISTS Token(
+     token TEXT PRIMARY KEY,
+     alias TEXT NOT NULL,
+     lastModified INTEGER NOT NULL
+);
+
+insertToken:
+INSERT OR REPLACE INTO Token(token,alias,lastModified)
+VALUES (?,?,?);
+
+updateToken:
+UPDATE Token SET alias = :alias, lastModified = :lastModified WHERE token = :token;
+
+deleteToken:
+DELETE FROM Token WHERE  token=?;
+
+getTokens:
+SELECT * FROM Token;
+
+checkTokenExists:
+SELECT EXISTS (SELECT 1 FROM Token WHERE token=:token);
