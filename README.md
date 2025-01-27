@@ -1,0 +1,2 @@
+# SimpleCMPLLMClient
+Compose Multiplatform随便写写的llm客户端,目前只支持OpenAI格式的标准api,只写了android和desktop
